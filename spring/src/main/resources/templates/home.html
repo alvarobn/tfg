@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Homepage Blog</title>
+    <link rel="stylesheet" href="/css/styleHome.css">
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="logo">
+                <img src="images/logo2.png" alt="">
+            </div>
+            <ul class="nav-area">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+                {{#registered}}
+                <li><a href="/blog/post">NewPost</a></li>
+                <li><a href="/panel">Panel</a></li>
+                {{/registered}}
+                {{#logged}}
+                <li><form action="/logout" method="post">
+                    <button class="botonLogOut" type="submit">LogOut</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form></li>
+                {{^registered}}
+                <li><a href="/register">FinishRegister</a></li>
+                {{/registered}}
+                {{/logged}}
+                {{^logged}}
+                <li><a href="/login">LogIn</a></li>
+                {{/logged}}
+            </ul>
+        </div>
+
+        <div class="welcome-text">
+            <h1 class="text-shadows">We are Creative</h1>
+            <a href="/blog">Read</a>
+        </div>
+    </header>
+</body>
+<footer>
+    <div class="footer-content">
+        <h3>Web Blog Spring</h3>
+        <p>Alvaro Borreguero Developer — TFG</p>
+    </div>
+</footer>
+</html>

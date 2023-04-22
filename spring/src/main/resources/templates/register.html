@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Homepage Blog</title>
+    <link rel="stylesheet" href="/css/styleRegister.css">
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="logo">
+                <img src="images/logo2.png" alt="">
+            </div>
+            <ul class="nav-area">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+        <div class="login-container">
+            <div class="form-container">
+                <form action="/register" class="form-register" method="post">
+                    {{#logged}}
+                    <input type="text" name="name" placeholder="User Name" value="{{userName}}">
+                    {{/logged}}
+                    {{^logged}}
+                    <input type="text" name="name" placeholder="User Name">
+                    {{/logged}}
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="submit" class="btn-new" value="Create new Account"></input>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <div class="line"></div>
+                </form>
+                <button class="btn-login" onclick="location.href='/login'" type="button">Login</button>
+            </div>
+        </div>
+    </header>
+
+
+</body>
+<footer>
+    <div class="footer-content">
+        <h3>Web Blog Spring</h3>
+        <p>Alvaro Borreguero Developer — TFG</p>
+    </div>
+</footer>
+</html>

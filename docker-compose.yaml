@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - 3307:3306
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - main_net
+  app:
+    depends_on:
+      - mysqldb
+    build: ./spring
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - 6868:6869
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+    networks:
+      - main_net
+
+  api:
+    depends_on:
+      - mysqldb
+    build: ./node
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - main_net
+
+volumes:
+  db:
+
+networks:
+  main_net:

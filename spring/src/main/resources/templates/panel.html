@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, intial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Website Homepage Blog</title>
+    <link rel="stylesheet" href="/css/stylePanel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<header>
+        <div class="wrapper">
+            <div class="logo">
+                <img src="images/logo2.png" alt="">
+            </div>
+            <ul class="nav-area">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+                {{#registered}}
+                <li><a href="/blog/post">NewPost</a></li>
+                <li><a href="/panel">Panel</a></li>
+                {{/registered}}
+                {{#logged}}
+                <li><form action="/logout" method="post">
+                    <button class="botonLogOut" type="submit">LogOut</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form></li>
+                {{^registered}}
+                <li><a href="/register">FinishRegister</a></li>
+                {{/registered}}
+                {{/logged}}
+                {{^logged}}
+                <li><a href="/login">LogIn</a></li>
+                {{/logged}}
+            </ul>
+        </div>
+    </header>
+	<section id="blog">
+		<div class="blog-heading">
+			<span>My Recent Posts</span>
+			<h3>My Blog</h3>
+		</div>
+
+		<div class="blog-container">
+			{{#listEntries}}
+			<div class="blog-box">
+				<div class="blog-img">
+					<img src='/blog/{{&id}}/image' alt="Img">
+				</div>
+				<div class="blog-text">
+					<div class="blog-info">
+                        <span>{{fecha}} / {{autor}}</span>
+                        <form action="/entries/delete">
+                            <input type="hidden" value={{id}} id="entryId" name="entryId"/>
+                            <button type="submit" id="completed-task" class="fabutton">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <input type="hidden" name="_csrf" value="{{token}}" />
+                        </form>
+                    </div>
+					<a href="/blog/{{&id}}" class="blog-title">{{titulo}}</a>
+					<p>{{descripcion}}</p>
+					<a href="/blog/{{&id}}">Read More</a>
+				</div>
+			</div>
+			{{/listEntries}}
+		</div>
+
+        <div class="blog-heading">
+			<span>My Recent Comments</span>
+			<h3>Comments</h3>
+		</div>
+
+        <div class="blog-container">
+			{{#listComments}}
+			<div class="comment-box">
+                <div class="comment-info">
+                    <span>{{fecha}} / {{autor}}</span>
+                    <form action="/comments/delete">
+                        <input type="hidden" value={{id}} id="commentId" name="commentId"/>
+                        <button type="submit" id="completed-task" class="fabutton">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                    </form>
+                </div>
+                <a href="/blog/{{&entry.id}}" class="blog-title">{{entry.titulo}}</a>
+                <p>{{contenido}}</p>
+			</div>
+			{{/listComments}}
+		</div>
+
+        
+	</section>
+
+</body>
+<footer>
+    <div class="footer-content">
+        <h3>Web Blog Spring</h3>
+        <p>Alvaro Borreguero Developer — TFG</p>
+    </div>
+</footer>
+</html>

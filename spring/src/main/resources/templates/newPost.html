@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, intial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Website Homepage Blog</title>
+    <link rel="stylesheet" href="/css/styleNewPost.css">
+    <script src="https://kit.fontawesome.com/6a50ab1e85.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header>
+        <div class="wrapper">
+            <div class="logo">
+                <img src="/images/logo2.png" alt="">
+            </div>
+            <ul class="nav-area">
+              <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+                {{#registered}}
+                <li><a href="/blog/post">NewPost</a></li>
+                <li><a href="/panel">Panel</a></li>
+                {{/registered}}
+                {{#logged}}
+                <li><form action="/logout" method="post">
+                    <button class="botonLogOut" type="submit">LogOut</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form></li>
+                {{^registered}}
+                <li><a href="/register">FinishRegister</a></li>
+                {{/registered}}
+                {{/logged}}
+                {{^logged}}
+                <li><a href="/login">LogIn</a></li>
+                {{/logged}}
+            </ul>
+        </div>
+    </header>
+	<section id="blog">
+		<div class="blog-container">
+            <div class="col-lg-12">
+                
+                <div class="blog-post">
+                    <div class="blog-content">
+                        <form action="/blog/insert" method="post" enctype="multipart/form-data">
+                            <h4>Titulo</h4>
+                            <input type="text" id="titulo" name="titulo" class="title">
+                            <h4>Imagen</h4>
+                            <div id="file-js-example" class="file is-centered is-boxed has-name">
+                                <label class="file-label">
+                                  <input class="file-input" type="file" name="file">
+                                  <span class="file-cta">
+                                    <span class="file-icon">
+                                      <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                      Choose a file…
+                                    </span>
+                                  </span>
+                                  <span class="file-name">
+                                    No file uploaded
+                                  </span>
+                                </label>
+                            </div>
+                            <h4>Contenido</h4>
+                            <textarea type="text" id="contenido" name="contenido"></textarea>
+                            <input type="submit" value="Post" class="post"/>
+                            <input type="hidden" name="_csrf" value="{{token}}" />
+                        </form>
+                        
+                    </div>
+                </div>
+                
+            </div>
+		</div>
+	</section>
+
+    <script>
+        const fileInput = document.querySelector('#file-js-example input[type=file]');
+        fileInput.onchange = () => {
+          if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+          }
+        }
+      </script>
+
+</body>
+<footer>
+    <div class="footer-content">
+        <h3>Web Blog Spring</h3>
+        <p>Alvaro Borreguero Developer — TFG</p>
+    </div>
+</footer>
+</html>

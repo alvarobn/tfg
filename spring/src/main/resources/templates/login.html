@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Homepage Blog</title>
+    <link rel="stylesheet" href="/css/styleLogin.css">
+    <script src="https://kit.fontawesome.com/6a50ab1e85.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="logo">
+                <img src="images/logo2.png" alt="">
+            </div>
+            <ul class="nav-area">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+        <div class="login-container">
+            <div class="form-container">
+                <form action="/login" method="POST" class="form-login">
+                    <input id="username" name="username" type="text" placeholder="User Name">
+                    <input id="password" name="password" type="password" placeholder="Password">
+                    <input type="submit" class="btn-login" value="Login"></input>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                </form>
+                <button class="btn-new" onclick="location.href='/register'" type="button">Create new Account</button>
+                <div class="second-login">
+                    <a href="oauth2/authorization/google"><i class="fa-brands fa-google"></i></a>
+                    <a href="oauth2/authorization/github"><i class="fa-brands fa-github"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+</body>
+<footer>
+    <div class="footer-content">
+        <h3>Web Blog Spring</h3>
+        <p>Alvaro Borreguero Developer — TFG</p>
+    </div>
+</footer>
+</html>
