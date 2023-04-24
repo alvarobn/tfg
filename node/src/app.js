@@ -1,9 +1,12 @@
 const express = require('express');
 const process = require('process');
 const router = require("./infrastructure/routes/route");
+const {basicAuth} = require("./application/security/basicauth");
 
 const app = express();
 const port = 3000;
+
+app.use(basicAuth);
 app.use(express.json());
 app.use(express.urlencoded({extended: true,}));
 app.use(router);

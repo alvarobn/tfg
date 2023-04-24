@@ -3,12 +3,13 @@ const process = require('process');
 
 const config = {
   db: {
+      namedPlaceholders: true,
       host: process.env.MYSQLDB_HOST,
       port: process.env.MYSQLDB_DOCKER_PORT,
       user: process.env.MYSQLDB_USER,
       password: process.env.MYSQLDB_ROOT_PASSWORD,
       database: process.env.MYSQLDB_DATABASE,
-  }
+  },
 };
 
 async function query(sql, params) {

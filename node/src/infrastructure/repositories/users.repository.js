@@ -1,6 +1,7 @@
 const db = require('../db');
 const helper = require('../helper');
 const {User} = require('../../domain/entities/user.entity');
+const bcryptjs = require('bcryptjs');
 
 async function getAll(){
   const rows = await db.query(
@@ -30,7 +31,25 @@ async function getById(id){
   return listUsers;
 }
 
+async function checkUser(username,password){
+  
+  const rows = await db.query(
+    `SELECT * FROM users WHERE name = :name`,{name: username}
+  );
+  const data = helper.emptyOrRows(rows);
+  if(data.length>0){
+    const hash = data[0]['password_hash'];
+    if(await bcryptjs.compare(password,hash)){
+      console.log("USER PETITION => " + username);
+      return true;
+    }else return false;
+  }
+  else return false;
+
+}
+
 module.exports = {
   getAll,
-  getById
+  getById,
+  checkUser
 }

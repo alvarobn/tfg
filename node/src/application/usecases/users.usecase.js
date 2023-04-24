@@ -19,10 +19,15 @@ async function getById(id){
   }
   return listUsersResponse;
 }
+async function checkUser(username, password){
+  if(await userRepository.checkUser(username, password)) return true;
+  else return false;
+}
 
 
 
 module.exports = {
   getAll,
-  getById
+  getById,
+  checkUser
 }
