@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
+    build: ./mysql
+    restart: always
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
@@ -29,7 +29,7 @@ services:
     networks:
       - main_net
 
-  api:
+  api-mysql:
     depends_on:
       - mysqldb
     build: ./node
@@ -39,9 +39,33 @@ services:
       - .env
     networks:
       - main_net
+  
+  api-mongo:
+    depends_on:
+      - mongodb
+    build: ./node2
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    networks:
+      - main_net
+
+  mongodb:
+    image: mongo:4.2.3-bionic
+    ports:
+      - 27018:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - main_net
 
 volumes:
   db:
+  mongodb:
 
 networks:
   main_net:

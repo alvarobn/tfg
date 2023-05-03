@@ -2,6 +2,7 @@ package com.alvaro.demo;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,16 +67,18 @@ public class DatabaseInitializer {
         }
         System.out.println("Usuarios generadas");
         
-        List<Entry> entries = entryRepository.findAll();
-        Entry entry1 = new Entry("Titulo 1","En este articulo hablaremos de como se implementan diferentes medidas de seguridad para evitar ataques informaticos.",user,img1);
-        Entry entry2 = new Entry("Titulo 2","Actualmente la gente esta impresionada con la nueva IA conocida como CHATGPT la cual esta produciendo estragos.",user1,img2);
-        Entry entry3 = new Entry("Titulo 3","Aparecen los primeros hackers en la guerra entre Ucrania y Rusia, provocando graves daños en sus infraestructuras.",user,img3);
-        Entry entry4 = new Entry("Titulo 4","Ya podremos usar nuestros moviles en los aviones gracias al 5G, actualmente sera de pago pero de nuevo vemos como avanza la tecnologia.",user,img4);
-        Comment comment1 = new Comment("Me ha parecido muy util e interesante",entry1,user1);
-        Comment comment2 = new Comment("No sabia nada del tema y me he enterado bastante bien :)",entry1,user2);
-        Comment comment3 = new Comment("Guau increible",entry2,user2);
-        System.out.println("Entradas y comentarios listos");
-        if(entries.isEmpty()){
+        try {
+            List<Entry> entries = entryRepository.findAll();
+        } catch (Exception e) {
+            Entry entry1 = new Entry("Titulo 1","En este articulo hablaremos de como se implementan diferentes medidas de seguridad para evitar ataques informaticos.",user,img1);
+            Entry entry2 = new Entry("Titulo 2","Actualmente la gente esta impresionada con la nueva IA conocida como CHATGPT la cual esta produciendo estragos.",user1,img2);
+            Entry entry3 = new Entry("Titulo 3","Aparecen los primeros hackers en la guerra entre Ucrania y Rusia, provocando graves daños en sus infraestructuras.",user,img3);
+            Entry entry4 = new Entry("Titulo 4","Ya podremos usar nuestros moviles en los aviones gracias al 5G, actualmente sera de pago pero de nuevo vemos como avanza la tecnologia.",user,img4);
+            Comment comment1 = new Comment("Me ha parecido muy util e interesante",entry1,user1);
+            Comment comment2 = new Comment("No sabia nada del tema y me he enterado bastante bien :)",entry1,user2);
+            Comment comment3 = new Comment("Guau increible",entry2,user2);
+            System.out.println("Entradas y comentarios listos");
+
             entryRepository.save(entry1);
             entryRepository.save(entry2);
             entryRepository.save(entry3);
@@ -85,7 +88,9 @@ public class DatabaseInitializer {
             commentRepository.save(comment2);
             commentRepository.save(comment3);
             System.out.println("Comments Guardados");
+            
         }
+       
         
     }
 
