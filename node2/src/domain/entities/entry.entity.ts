@@ -8,7 +8,6 @@ export class Entry implements Entity{
         public titulo: string,
         public autor: string,
         public contenido: string,
-        public descripcion: string,
         public comments: Comment[],
     ){}
     

@@ -7,7 +7,7 @@ import { EntryResponse } from "../responses/entry.response";
 import { UserResponse } from "../responses/user.response";
 
 
-export class UserUseCase {
+export class CommentUseCase {
     constructor(private repository: Repository<User>){}
 
     commentToResponse(comment: Comment): CommentResponse{
@@ -41,14 +41,12 @@ export class UserUseCase {
     }
 
     
-    async getAll(): Promise<UserResponse[]> {
-        const allUsers: User[] = await this.repository.readAll();
-        const allResponses = allUsers.map((user: User): UserResponse => this.userToResponse(user));
-        return allResponses;
-    }
-    async getByName(nameUser: string): Promise<UserResponse[]> {
-        const user: User[] = await this.repository.getOne({name:nameUser});
-        const allUsers: UserResponse[] = user.map(user => this.userToResponse(user));
-        return allUsers;
+    async getAll(): Promise<CommentResponse[]> {
+        const allUsers: User[] = await this.repository.read_project({},{_id:0,entries:1});
+        let allEntries: Entry[] = [];
+        allUsers.forEach(user => allEntries = allEntries.concat(user.entries));
+        let allComments: CommentResponse[] = []
+        allEntries.forEach(entry => allComments = allComments.concat(entry.comments.map(comment => this.commentToResponse(comment))));
+        return allComments;
     }
 }

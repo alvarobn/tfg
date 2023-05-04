@@ -64,9 +64,9 @@ export class MongodbRepository<E extends Entity> implements Repository<E> {
         if(!result.acknowledged) throw new Error("Replace to mongodb error");
     }
 
-    async getOne(filter:any ): Promise<any> {
+    async getOne(filter:any ): Promise<any[]> {
         const projection = {_id:0}
-        const entry = await this.collection.find(filter).limit(1).project<E>(projection).toArray();
+        const entry:any[] = await this.collection.find(filter).limit(1).project<E>(projection).toArray();
         return entry;
     }
 

@@ -10,7 +10,7 @@ export interface Repository<T extends Entity> {
     countAll(): Promise<number>;
     update(filter: any, update: any): Promise<void>;
     replace(filter: any, update: any): Promise<void>;
-    getOne(filter: any): Promise<T>;
+    getOne(filter: any): Promise<T[]>;
     removeAll(): Promise<void>;
     getLast(filter: any): Promise<T[]>;
     store(newObject: any): Promise<void>;
