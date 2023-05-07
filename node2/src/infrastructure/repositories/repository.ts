@@ -14,4 +14,5 @@ export interface Repository<T extends Entity> {
     removeAll(): Promise<void>;
     getLast(filter: any): Promise<T[]>;
     store(newObject: any): Promise<void>;
+    checkUser(username: string, password:string): Promise<boolean>;
 }

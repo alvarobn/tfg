@@ -1,6 +1,7 @@
 import { Repository } from "./repository";
 import { Entity } from "../../domain/entities/entity";
 import { Collection } from "mongodb";
+import { genSaltSync, hashSync, compareSync } from "bcrypt";
 
 export class MongodbRepository<E extends Entity> implements Repository<E> {
     constructor(
@@ -76,5 +77,15 @@ export class MongodbRepository<E extends Entity> implements Repository<E> {
 
     async store(newObject: any): Promise<void>{
         await this.collection.insertOne(newObject);
+    }
+
+    async checkUser(username: string, password: string): Promise<boolean> {
+        const user:any = await this.collection.findOne({name:username});
+        if(user!=null){
+            if(compareSync(password,user.passwordHash)){
+                console.log("USER PETITION => " + username);
+                return true;
+            }else return false;
+        }else return false;
     }
 }

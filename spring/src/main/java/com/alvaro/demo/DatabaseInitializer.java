@@ -1,4 +1,5 @@
 package com.alvaro.demo;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -67,9 +68,9 @@ public class DatabaseInitializer {
         }
         System.out.println("Usuarios generadas");
         
-        try {
-            List<Entry> entries = entryRepository.findAll();
-        } catch (Exception e) {
+        List<Entry> entries = entryRepository.findAll();
+        
+        if(entries.size()==0){
             Entry entry1 = new Entry("Titulo 1","En este articulo hablaremos de como se implementan diferentes medidas de seguridad para evitar ataques informaticos.",user,img1);
             Entry entry2 = new Entry("Titulo 2","Actualmente la gente esta impresionada con la nueva IA conocida como CHATGPT la cual esta produciendo estragos.",user1,img2);
             Entry entry3 = new Entry("Titulo 3","Aparecen los primeros hackers en la guerra entre Ucrania y Rusia, provocando graves daños en sus infraestructuras.",user,img3);

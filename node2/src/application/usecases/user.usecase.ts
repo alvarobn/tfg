@@ -10,37 +10,23 @@ import { UserResponse } from "../responses/user.response";
 export class UserUseCase {
     constructor(private repository: Repository<User>){}
 
-    commentToResponse(comment: Comment): CommentResponse{
-        const toResponse: CommentResponse = {
-            fecha: comment.fecha,
-            autor: comment.autor,
-            contenido: comment.contenido,
-        };
-        return toResponse;
-    }
-
-    entryToResponse(entry: Entry): EntryResponse{
-        const toResponse: EntryResponse = {
-            fecha: entry.fecha,
-            titulo: entry.titulo,
-            autor: entry.autor,
-            contenido: entry.contenido,
-            comments: entry.comments.map(comment => this.commentToResponse(comment)),
-        };
-        return toResponse;
-    }
-
     userToResponse(user: User): UserResponse {
         const response: UserResponse = {
             name: user.name,
             roles: user.roles,
-            entries: user.entries.map(entry => this.entryToResponse(entry)),
+            entries: user.entries,
+            comments: user.comments,
             email: user.email,
         };
         return response;
     }
 
-    
+
+    async checkUser(username: string, password:string): Promise<boolean>{
+        if(await this.repository.checkUser(username, password)) return true;
+        else return false;
+      }
+      
     async getAll(): Promise<UserResponse[]> {
         const allUsers: User[] = await this.repository.readAll();
         const allResponses = allUsers.map((user: User): UserResponse => this.userToResponse(user));

@@ -5,9 +5,9 @@ export class EntryResponse implements Response {
     constructor(
         public fecha: Date,
         public titulo: string,
-        public autor: string,
+        public autor: number,
         public contenido: string,
-        public comments: CommentResponse[],
+        public comments: number[],
     ) {}
 }
 

@@ -1,4 +1,3 @@
-import { Comment } from "./comment.entity";
 import { Entity } from "./entity";
 
 export class Entry implements Entity{
@@ -6,9 +5,9 @@ export class Entry implements Entity{
         public id: number,
         public fecha: Date,
         public titulo: string,
-        public autor: string,
+        public autor: number,
         public contenido: string,
-        public comments: Comment[],
+        public comments: number[],
     ){}
     
 }

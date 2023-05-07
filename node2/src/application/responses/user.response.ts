@@ -5,7 +5,8 @@ export class UserResponse implements Response {
     constructor(
         public name: string,
         public roles: string[],
-        public entries: EntryResponse[],
+        public entries: number[],
+        public comments: number[],
         public email: string,
     ) {}
 }
