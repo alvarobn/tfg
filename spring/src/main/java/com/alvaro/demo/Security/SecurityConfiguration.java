@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -31,46 +33,44 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain filterChainApi(HttpSecurity http) throws Exception{
-        http.formLogin(form -> 
-                form.disable())
-            .httpBasic()
-            .and().csrf().ignoringRequestMatchers("/api/**")
-            .and().authorizeHttpRequests(request ->
-            request.requestMatchers(HttpMethod.GET,"/api/**").authenticated()
-                    .requestMatchers(HttpMethod.POST,"/api/**").authenticated()
-                    .requestMatchers(HttpMethod.PUT,"/api/**").authenticated()
-                    .requestMatchers(HttpMethod.DELETE,"/api/**").authenticated()
-                    .requestMatchers("/api/**").permitAll()
-                    .anyRequest().permitAll());
-        return http.build();
+    SecurityFilterChain filterChainApi(HttpSecurity http) throws Exception{
+        return http
+                .securityMatcher(AntPathRequestMatcher.antMatcher("/api/**"))
+                .authorizeHttpRequests(request -> {
+                    request.anyRequest().authenticated();
+                }).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic().and().csrf().disable()
+                .build();
     }
 
     @Bean
-    public SecurityFilterChain filterChainWeb(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request ->
-            request.requestMatchers("/panel","/blog/post","/blog/*").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
-                .requestMatchers("/blog").authenticated()
-                .requestMatchers("/**").permitAll())
-        .authenticationProvider(authProvider)
-        .formLogin(form -> form
-            .loginPage("/login")
-            .defaultSuccessUrl("/")
-            .failureUrl("/error")
-            .usernameParameter("username")
-            .passwordParameter("password"))
-        .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-        .logout(logout -> logout
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/"))
-        .oauth2Login(oauth -> oauth
-            .loginPage("/login")
-            .successHandler(oauth2authSuccessHandler))
-        .csrf().ignoringRequestMatchers("/api/**")
-        .and().headers().xssProtection();
-
-        return http.build();      
-
+    @Order(2)
+    SecurityFilterChain filterChainWeb(HttpSecurity http) throws Exception {
+       return http
+                .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers("/panel","/blog/post","/blog/*").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                    .requestMatchers("/blog").authenticated()
+                    .requestMatchers("/**").permitAll()
+                    .anyRequest().permitAll();
+                })
+                .authenticationProvider(authProvider)
+                .formLogin(form -> form
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/error")
+                    .usernameParameter("username")
+                    .passwordParameter("password"))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/"))
+                .oauth2Login(oauth -> oauth
+                    .loginPage("/login")
+                    .successHandler(oauth2authSuccessHandler))
+                .csrf().ignoringRequestMatchers("/api/**")
+                .and().build();
     }
+
 }
