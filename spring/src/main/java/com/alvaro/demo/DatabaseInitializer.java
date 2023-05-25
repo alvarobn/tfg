@@ -1,9 +1,7 @@
 package com.alvaro.demo;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

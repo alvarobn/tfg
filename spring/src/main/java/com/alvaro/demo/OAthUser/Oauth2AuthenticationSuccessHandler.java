@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.alvaro.demo.User.User;
 import com.alvaro.demo.User.UserComponent;
-import com.alvaro.demo.User.UserRepository;
 import com.alvaro.demo.User.UserService;
 
 import jakarta.servlet.ServletException;
