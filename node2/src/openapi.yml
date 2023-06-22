@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Deceye API
+  version: 1.0.13
+servers:
+  - url: localhost:3001/api
+    description: tfg
+tags:
+  - name: api
+    description: Public api.
+    
+paths:
+#PUBLIC API
+  /users:
+    get:
+      tags:
+        - api
+      summary: Get Users in the App
+      parameters:
+        - name: name
+          description: Name of the User (default ALL)
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Bad request.
+  /entries:
+    get:
+      tags:
+        - api
+      summary: Get Entries in the App
+      parameters:
+        - name: autor
+          description: Id of the Autor (default ANY)
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: titulo
+          description: Tittle of the Entry (default ANY)
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entry'
+        '404':
+          description: Bad request.
+  
+  /comments:
+    get:
+      tags:
+        - api
+      summary: Get All Comments in the App
+      parameters:
+        - name: autor
+          description: Id of the Autor (default ANY)
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: Entry
+          description: Id of the Entry (default ANY)
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Bad request.
+
+
+#OPENBB API
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: "admin"
+        entries:
+          type: array
+          items:
+            type: integer
+        comments:
+          type: array
+          items:
+            type: integer
+        email:
+          type: string
+          example: "prueba@gmail.com"
+    Entry:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        fecha:
+          type: string
+          format: date
+        titulo:
+          type: string
+          example: "Titulo 1"
+        autor:
+          type: integer
+          example: 1
+        contenido:
+          type: string
+        comments:
+          type: array
+          items:
+            type: integer
+          
+    Comment:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        fecha:
+          type: string
+          format: date
+        autor:
+          type: integer
+          example: 1
+        entry:
+          type: integer
+          example: 2
+        contenido:
+          type: string
+  

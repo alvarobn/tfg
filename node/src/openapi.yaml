@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  title: Deceye API
+  version: 1.0.13
+servers:
+  - url: localhost:3000
+    description: tfg
+tags:
+  - name: api
+    description: Public api.
+    
+paths:
+#PUBLIC API
+  /users:
+    get:
+      tags:
+        - api
+      summary: Get All Users in the App
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Bad request.
+  /users/{id}:
+    get:
+      tags:
+        - api
+      summary: Get a User by the Id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the user to get
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Bad request.
+  /entries:
+    get:
+      tags:
+        - api
+      summary: Get All Entries in the App
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entry'
+        '404':
+          description: Bad request.
+  /entries/{id}:
+    get:
+      tags:
+        - api
+      summary: Get a Entry by the Id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the entry to get
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entry'
+        '404':
+          description: Bad request.
+          
+  /comments:
+    get:
+      tags:
+        - api
+      summary: Get All Comments in the App
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Bad request.
+  /comments/{id}:
+    get:
+      tags:
+        - api
+      summary: Get a Comment by the Id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the comment to get
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Bad request.
+  
+  
+
+
+#OPENBB API
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: "alvaro"
+        email:
+          type: string
+          example: "prueba@gmail.com"
+    Entry:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        autor:
+          type: string
+          example: "alvaro"
+        titulo:
+          type: string
+          example: "Titulo 1"
+        contenido:
+          type: string
+        descripcion:
+          type: string
+        fecha:
+          type: string
+          format: date
+          
+    Comment:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        autor:
+          type: string
+          example: "alvaro"
+        contenido:
+          type: string
+        fecha:
+          type: string
+          format: date
+        entry_id:
+          type: number
+        user_comment_id:
+          type: number
+  
+  
+  

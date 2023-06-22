@@ -12,8 +12,8 @@ export class UserUseCase {
 
     userToResponse(user: User): UserResponse {
         const response: UserResponse = {
+            id: user.id,
             name: user.name,
-            roles: user.roles,
             entries: user.entries,
             comments: user.comments,
             email: user.email,

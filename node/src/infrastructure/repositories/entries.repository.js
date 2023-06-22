@@ -10,8 +10,8 @@ async function getAll(){
   const data = helper.emptyOrRows(rows);
   let listEntries = [];
   for(let i in data){
-    const newEntry = new Entry(data[i]['id'],data[i]['autor'],data[i]['contenido'],data[i]['descripcion'],
-        data[i]['fecha'],data[i]['fecha'],data[i]['titulo'],data[i]['image_id'],data[i]['user_entry_id']);
+    const newEntry = new Entry(data[i]['id'],data[i]['autor'],data[i]['titulo'],data[i]['contenido'],data[i]['descripcion'],
+        data[i]['fecha'],data[i]['fecha'],data[i]['image_id'],data[i]['user_entry_id']);
     listEntries.push(newEntry);
   }
   return listEntries;
@@ -25,8 +25,8 @@ async function getById(id){
   const data = helper.emptyOrRows(rows);
   let listEntries = [];
   for(let i in data){
-    const newEntry = new Entry(data[i]['id'],data[i]['autor'],data[i]['contenido'],data[i]['descripcion'],
-        data[i]['fecha'],data[i]['fecha'],data[i]['titulo'],data[i]['image_id'],data[i]['user_entry_id']);
+    const newEntry = new Entry(data[i]['id'],data[i]['autor'],data[i]['titulo'],data[i]['contenido'],data[i]['descripcion'],
+        data[i]['fecha'],data[i]['fecha'],data[i]['image_id'],data[i]['user_entry_id']);
     listEntries.push(newEntry);
   }
   return listEntries;

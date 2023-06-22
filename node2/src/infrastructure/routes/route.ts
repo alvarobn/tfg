@@ -57,6 +57,7 @@ function createGetUsersHandler(userUseCase: UserUseCase): RequestHandler {
     }
 }
 
+
 //HANDLER FOR ENTRIES
 function createGetEntriesHandler(entryUseCase: EntryUseCase): RequestHandler {
     return async function getAllEntriesHandler(req: Request, res: Response): Promise<Response> {

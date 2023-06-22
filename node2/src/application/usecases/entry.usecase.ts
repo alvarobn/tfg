@@ -13,6 +13,7 @@ export class EntryUseCase {
 
     entryToResponse(entry: Entry): EntryResponse{
         const toResponse: EntryResponse = {
+            id: entry.id,
             fecha: entry.fecha,
             titulo: entry.titulo,
             autor: entry.autor,

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.text.SimpleDateFormat;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,32 +27,26 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="entries")
 public class Entry {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @CreationTimestamp
     private Date fecha;
-
     private String titulo;
     private String autor;
+    @Column(columnDefinition = "TEXT")
     private String contenido;
     @JsonIgnore
     private String descripcion;
-
     @JsonIgnore
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "entry")
     private List<Comment> comments;
-
     @JsonIgnore
     @ManyToOne
     private User userEntry;
-
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
 	private Image image;
-
     public Entry(){}
     public Entry(Long id,String titulo, String contenido, User user, Image image){
         setId(id);

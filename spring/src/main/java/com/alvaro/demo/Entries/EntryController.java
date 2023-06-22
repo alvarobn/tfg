@@ -1,5 +1,6 @@
 package com.alvaro.demo.Entries;
 import java.io.ByteArrayInputStream;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -69,6 +70,7 @@ public class EntryController {
     public String post(Model model, @PathVariable long id){
         Entry entry = entryService.getEntryById(id);
         if(entry != null){
+            entry.setContenido(lineBreaks(entry.getContenido()));
             model.addAttribute("entry", entry);
             return "post";
         }else{
@@ -105,6 +107,13 @@ public class EntryController {
             }
         }
         return "error";
+    }
+
+    public String lineBreaks(String text) {
+        // Reemplazar los saltos de línea por <br>
+        String processedText = text.replace("\n", "<br>");
+        // Devolver el texto procesado
+        return processedText;
     }
     
 }

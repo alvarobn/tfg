@@ -10,6 +10,7 @@ export class CommentUseCase {
 
     commentToResponse(comment: Comment): CommentResponse{
         const toResponse: CommentResponse = {
+            id: comment.id,
             fecha: comment.fecha,
             autor: comment.autor,
             entry: comment.entry,

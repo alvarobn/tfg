@@ -3,8 +3,8 @@ import { Response } from "./response";
 
 export class UserResponse implements Response {
     constructor(
+        public id: number,
         public name: string,
-        public roles: string[],
         public entries: number[],
         public comments: number[],
         public email: string,

@@ -51,7 +51,7 @@ async function getAllCommentsHandler(req, res, next){
 async function getCommentByIdHandler(req, res, next){
   try{
     const id = req.params.id ?? -1;
-    res.json(await useCaseEntry.getById(id))
+    res.json(await useCaseComment.getById(id))
   }catch (err){
     console.error(`Error while getting entries `, err.message);
     next(err);
